@@ -1,0 +1,555 @@
+:root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --secondary: #ec4899;
+    --accent: #14b8a6;
+    --bg-dark: #0f0f1e;
+    --bg-card: #1a1a2e;
+    --bg-card-hover: #25254a;
+    --text-primary: #f8f9fa;
+    --text-secondary: #9ca3af;
+    --border: #2d2d4a;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --shadow: rgba(99, 102, 241, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    overflow-x: hidden;
+}
+
+/* Animated Background */
+.app-container {
+    min-height: 100vh;
+    position: relative;
+}
+
+.bg-gradient {
+    position: fixed;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 70% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 50% 20%, rgba(20, 184, 166, 0.1) 0%, transparent 50%);
+    animation: gradientShift 20s ease infinite;
+    z-index: -2;
+}
+
+@keyframes gradientShift {
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(-5%, -5%) rotate(5deg);
+    }
+}
+
+.bg-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.3;
+    z-index: -1;
+}
+
+/* Header */
+.header {
+    padding: 1.5rem 2rem;
+    backdrop-filter: blur(20px);
+    background: rgba(26, 26, 46, 0.8);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    animation: slideDown 0.6s ease;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.header-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo-text {
+    font-size: 1.8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+}
+
+.connect-btn {
+    padding: 0.875rem 2rem;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px var(--shadow);
+    font-family: 'Syne', sans-serif;
+}
+
+.connect-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 30px var(--shadow);
+}
+
+.connect-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.wallet-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    background: var(--success);
+    border-radius: 50%;
+    animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.wallet-address {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+}
+
+/* Transaction Status */
+.tx-status {
+    position: fixed;
+    top: 100px;
+    right: 2rem;
+    padding: 1rem 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    gap: 0.75rem;
+    animation: slideInRight 0.4s ease;
+}
+
+.tx-status.show {
+    display: flex;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(400px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.tx-icon {
+    font-size: 1.5rem;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Main Content */
+.main-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    min-height: calc(100vh - 200px);
+}
+
+/* Welcome Section */
+.welcome-section {
+    text-align: center;
+    padding: 4rem 2rem;
+}
+
+.welcome-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.welcome-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    margin-bottom: 3rem;
+}
+
+.welcome-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.feature-card {
+    padding: 2rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    background: var(--bg-card-hover);
+    border-color: var(--primary);
+}
+
+.feature-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Marketplace */
+.marketplace-section {
+    display: none;
+}
+
+.marketplace-section.show {
+    display: block;
+}
+
+.section-header {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+}
+
+.section-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+/* NFT Grid */
+.nft-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.nft-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.nft-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--primary);
+    box-shadow: 0 20px 60px rgba(99, 102, 241, 0.3);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.nft-image-container {
+    position: relative;
+    aspect-ratio: 1;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+}
+
+.nft-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.nft-image-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nft-id {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    z-index: 1;
+}
+
+.price-badge {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    z-index: 1;
+}
+
+.nft-details {
+    padding: 1.5rem;
+}
+
+.nft-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.nft-uri {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 1rem;
+}
+
+.nft-owner {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem;
+    background: rgba(99, 102, 241, 0.1);
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+}
+
+.owner-label {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.owner-address {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+/* Actions */
+.nft-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.owner-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.action-btn {
+    padding: 1rem;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    font-family: 'Syne', sans-serif;
+}
+
+.buy-btn {
+    background: linear-gradient(135deg, var(--accent), #0d9488);
+    color: white;
+}
+
+.sell-btn {
+    background: linear-gradient(135deg, var(--secondary), #db2777);
+    color: white;
+}
+
+.transfer-btn {
+    background: linear-gradient(135deg, #9333ea, #7c3aed);
+    color: white;
+}
+
+.action-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+.action-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.input-group {
+    position: relative;
+}
+
+.price-input,
+.transfer-input {
+    width: 100%;
+    padding: 1rem;
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: 1rem;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+}
+
+.price-input:focus,
+.transfer-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.toggle-btn {
+    padding: 0.75rem;
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.toggle-btn:hover:not(:disabled) {
+    background: rgba(99, 102, 241, 0.2);
+    border-color: var(--primary);
+}
+
+.sell-section,
+.transfer-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-secondary);
+    border-top: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+    .welcome-title {
+        font-size: 2.5rem;
+    }
+
+    .nft-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,5 +1,5 @@
 {
     "token_name": "Zorg the Confused",
     "description": "Alien cat from a faraway galaxy who got lost on Earth and still doesn’t understand doors, gravity, or laser pointers.",
-    "token_image_uri": "http://127.0.0.1:3000/cats/cat_2_NFT.png"
+    "token_image_uri": "/assets/cat_2_NFT.png"
 }

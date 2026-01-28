@@ -21,7 +21,8 @@
   "scripts": {
     "run-node": "npx hardhat node",
     "deploy": "npx hardhat run scripts/deploy.js --network localhost && mv scripts/napping_cats_contract.json frontend/src",
-    "serve": "cd frontend && npm run dev"
+    "serve": "cd frontend && npm run dev",
+    "wiiiw":"cd interface && python3 -m http.server"
   },
   "dependencies": {
     "express": "^5.2.1",

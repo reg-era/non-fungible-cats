@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Napping Cats NFT Marketplace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/style/style.css">
+    <link rel="icon" type="image/svg+xml" href="/style/favicon.ico" />
+
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Animated Background -->
+        <div class="bg-gradient"></div>
+        <div class="bg-grid"></div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <h1 class="logo-text">Napping Cats</h1>
+                </div>
+
+                <button id="connectBtn" class="connect-btn">
+                    <span class="btn-icon">🔗</span>
+                    <span id="connectBtnText">Connect Wallet</span>
+                </button>
+
+                <div id="walletInfo" class="wallet-info" style="display: none;">
+                    <div class="wallet-badge">
+                        <span class="status-dot"></span>
+                        <span id="walletAddress" class="wallet-address"></span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Transaction Status -->
+        <div id="txStatus" class="tx-status">
+            <span class="tx-icon">⏳</span>
+            <span id="txStatusText"></span>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Welcome Section -->
+            <div id="welcomeSection" class="welcome-section">
+                <h2 class="welcome-title">Welcome to Napping Cats NFT</h2>
+                <p class="welcome-subtitle">Connect your wallet to explore and trade adorable sleeping felines</p>
+                <div class="welcome-features">
+                    <div class="feature-card">
+                        <h3>Unique NFTs</h3>
+                        <p>Each cat is one-of-a-kind</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Trade Freely</h3>
+                        <p>Buy and sell on the marketplace</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>Secure & Decentralized</h3>
+                        <p>Powered by Ethereum</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Marketplace Section -->
+            <div id="marketplaceSection" class="marketplace-section">
+                <div class="section-header">
+                    <h2 class="section-title">Marketplace</h2>
+                    <p class="section-subtitle">Discover and collect napping cats</p>
+                </div>
+                <div id="nftGrid" class="nft-grid"></div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Built with ❤️ on Ethereum</p>
+        </footer>
+    </div>
+
+    <script type="module" src="/js/index.js"></script>
+    <script src="./js/napping_cats_contract.js"></script>
+    <script src="./js/token_data.js"></script>
+</body>
+
+</html>
