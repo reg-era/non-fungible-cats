@@ -1,3 +1,4 @@
+/* NFT Card Styles */
 .nft-card {
     background: var(--bg-card);
     border: 1px solid var(--border);
@@ -20,6 +21,12 @@
     overflow: hidden;
 }
 
+.nft-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .nft-image-placeholder {
     width: 100%;
     height: 100%;
@@ -27,7 +34,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .nft-id {
@@ -41,11 +50,7 @@
     font-family: 'Space Mono', monospace;
     font-weight: 700;
     font-size: 0.9rem;
-}
-
-.cat-emoji {
-    font-size: 8rem;
-    animation: float 3s ease-in-out infinite;
+    z-index: 1;
 }
 
 .price-badge {
@@ -61,11 +66,12 @@
     gap: 0.5rem;
     font-weight: 700;
     font-size: 1.1rem;
+    z-index: 1;
 }
 
-.eth-symbol {
-    color: var(--accent);
-    font-size: 1.3rem;
+.price-badge svg {
+    width: 16px;
+    height: 16px;
 }
 
 .nft-details {
@@ -112,12 +118,20 @@
     color: var(--primary);
 }
 
+/* Actions Container */
 .nft-actions {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
 
+.owner-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+/* Action Buttons */
 .action-btn {
     padding: 1rem;
     border: none;
@@ -144,19 +158,23 @@
     box-shadow: 0 6px 25px rgba(20, 184, 166, 0.4);
 }
 
-.buy-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
 .btn-price {
     margin-left: auto;
     padding: 0.25rem 0.75rem;
     background: rgba(255, 255, 255, 0.2);
     border-radius: 6px;
     font-family: 'Space Mono', monospace;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
 }
 
+.btn-price svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* Sell Section */
 .sell-section {
     display: flex;
     flex-direction: column;
@@ -176,6 +194,13 @@
     font-weight: 700;
     font-size: 1.1rem;
     z-index: 1;
+    display: flex;
+    align-items: center;
+}
+
+.input-prefix svg {
+    width: 18px;
+    height: 18px;
 }
 
 .price-input {
@@ -212,7 +237,123 @@
     box-shadow: 0 6px 25px rgba(236, 72, 153, 0.4);
 }
 
-.sell-btn:disabled {
+/* Transfer Section */
+.transfer-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.transfer-input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    background: rgba(147, 51, 234, 0.1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-family: 'Space Mono', monospace;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.transfer-input:focus {
+    outline: none;
+    border-color: #9333ea;
+    box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.1);
+}
+
+.transfer-input::placeholder {
+    color: var(--text-secondary);
+}
+
+.transfer-btn {
+    background: linear-gradient(135deg, #9333ea, #7c3aed);
+    color: white;
+    box-shadow: 0 4px 15px rgba(147, 51, 234, 0.3);
+}
+
+.transfer-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 25px rgba(147, 51, 234, 0.4);
+}
+
+/* Toggle Button */
+.toggle-btn {
+    padding: 0.75rem 1rem;
+    background: rgba(99, 102, 241, 0.1);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Syne', sans-serif;
+}
+
+.toggle-btn:hover:not(:disabled) {
+    background: rgba(99, 102, 241, 0.2);
+    border-color: var(--primary);
+}
+
+.toggle-btn:active:not(:disabled) {
+    transform: scale(0.98);
+}
+
+/* Disabled States */
+.action-btn:disabled,
+.toggle-btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+}
+
+.action-btn:disabled {
+    transform: none !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nft-card {
+        margin: 0 auto;
+    }
+
+    .nft-details {
+        padding: 1.25rem;
+    }
+
+    .action-btn {
+        padding: 0.875rem;
+        font-size: 0.95rem;
+    }
+
+    .toggle-btn {
+        padding: 0.625rem 0.875rem;
+        font-size: 0.85rem;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

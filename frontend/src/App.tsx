@@ -59,6 +59,7 @@ export default function App() {
     setTokens(loaded);
   };
 
+
   return (
     <div className="app-container">
       {/* Animated Background */}
@@ -69,7 +70,6 @@ export default function App() {
       <header className="header">
         <div className="header-content">
           <div className="logo-section">
-            <div className="logo-icon">😺</div>
             <h1 className="logo-text">Napping Cats</h1>
           </div>
 
@@ -105,17 +105,14 @@ export default function App() {
             <p className="welcome-subtitle">Connect your wallet to explore and trade adorable sleeping felines</p>
             <div className="welcome-features">
               <div className="feature-card">
-                <div className="feature-icon">🎨</div>
                 <h3>Unique NFTs</h3>
                 <p>Each cat is one-of-a-kind</p>
               </div>
               <div className="feature-card">
-                <div className="feature-icon">💎</div>
                 <h3>Trade Freely</h3>
                 <p>Buy and sell on the marketplace</p>
               </div>
               <div className="feature-card">
-                <div className="feature-icon">🔒</div>
                 <h3>Secure & Decentralized</h3>
                 <p>Powered by Ethereum</p>
               </div>

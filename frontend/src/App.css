@@ -359,11 +359,6 @@ body {
   box-shadow: 0 10px 40px rgba(99, 102, 241, 0.2);
 }
 
-.feature-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
-
 .feature-card h3 {
   font-size: 1.25rem;
   font-weight: 700;

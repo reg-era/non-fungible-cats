@@ -19,8 +19,13 @@
     "typechain": "^8.3.2"
   },
   "scripts": {
-    "run-node":"npx hardhat node",
-    "deploy":"npx hardhat run scripts/deploy.js --network localhost && mv scripts/napping_cats_contract.json frontend/src",
+    "run-node": "npx hardhat node",
+    "deploy": "npx hardhat run scripts/deploy.js --network localhost && mv scripts/napping_cats_contract.json frontend/src",
     "serve": "cd frontend && npm run dev"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "fs": "^0.0.1-security",
+    "ipfs-http-client": "^60.0.1"
   }
 }
