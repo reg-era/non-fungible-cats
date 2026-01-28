@@ -8,11 +8,36 @@ let account = "";
 let tokens = [];
 
 // Contract configuration (loaded from napping_cats_contract.js)
-const CONTRACT_ADDRESS = window.contractData.address;
-const CONTRACT_ABI = window.contractData.abi;
+let CONTRACT_ADDRESS;
+let CONTRACT_ABI;
 
 // Token data (loaded from token_data.js)
-const tokenDataMap = window.tokenDataMap;
+const tokenDataMap = {};
+
+const loadDappData = async () => {
+    try {
+        const res = await fetch("/napping_cats_contract.json")
+        const data = await res.json()
+        CONTRACT_ADDRESS = data.address;
+        CONTRACT_ABI = data.abi;
+    } catch (error) {
+        console.error(error);
+        alert("Smart contract adress not found")
+    }
+
+    const getNFT = async (uri) => {
+        try {
+            const res = await fetch(`/NFTs/${uri}`)
+            const data = await res.json()
+            tokenDataMap[uri] = data
+        } catch (error) {
+            console.error(error);
+            alert("Smart contract adress not found")
+        }
+    }
+
+    ['0.json', '1.json', '2.json'].forEach(async nft => await getNFT(nft))
+}
 
 // DOM Elements
 const connectBtn = document.getElementById('connectBtn');
@@ -26,7 +51,8 @@ const txStatus = document.getElementById('txStatus');
 const txStatusText = document.getElementById('txStatusText');
 
 // Initialize
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadDappData();
     connectBtn.addEventListener('click', connectWallet);
 });
 
@@ -70,7 +96,7 @@ async function connectWallet() {
         // Load tokens
         await loadTokens();
     } catch (error) {
-        console.error('Failed to connect wallet:', error);
+        // console.error('Failed to connect wallet:', error);
         alert('Failed to connect wallet');
         connectBtnText.textContent = 'Connect Wallet';
         connectBtn.disabled = false;
@@ -121,7 +147,7 @@ function renderToken(token, index) {
             <div class="nft-image-placeholder">
                 <span class="nft-id">#${index}</span>
             </div>
-            ${token.price ? `<div class="price-badge">${parseFloat(token.price).toFixed(4)} ETH</div>` : ''}
+            ${token.price ? `<div class="price-badge">${token.price} wei</div>` : ''}
         </div>
 
         <div class="nft-details">
@@ -163,7 +189,7 @@ function renderOwnerActions(tokenId) {
                 <button class="action-btn transfer-btn" id="transfer-btn-${tokenId}">Send NFT</button>
             </div>
 
-            <button class="toggle-btn" id="toggle-btn-${tokenId}">🎁 Gift NFT</button>
+            <button class="toggle-btn" id="toggle-btn-${tokenId}">Gift NFT</button>
         </div>
     `;
 }
@@ -172,7 +198,7 @@ function renderOwnerActions(tokenId) {
 function renderBuyerActions(tokenId, price) {
     return `
         <button class="action-btn buy-btn" id="buy-btn-${tokenId}">
-            Buy Now${price ? ` (${parseFloat(price).toFixed(4)} ETH)` : ''}
+            Buy Now${price ? ` ${price}` : ''}
         </button>
     `;
 }
@@ -202,11 +228,11 @@ function toggleMode(tokenId) {
     if (sellSection.classList.contains('hidden')) {
         sellSection.classList.remove('hidden');
         transferSection.classList.add('hidden');
-        toggleBtn.textContent = '🎁 Gift NFT';
+        toggleBtn.textContent = 'Gift NFT';
     } else {
         sellSection.classList.add('hidden');
         transferSection.classList.remove('hidden');
-        toggleBtn.textContent = '← Back to Sell';
+        toggleBtn.textContent = 'Sell NFT';
     }
 }
 
@@ -222,19 +248,19 @@ async function listToken(tokenId) {
 
     try {
         showTxStatus('Listing...');
-        const price = ethers.utils.parseEther(priceStr);
+        const price = Number.parseFloat(priceStr);
         const tx = await contract.listToken(tokenId, price);
-        
+
         showTxStatus('Processing transaction...');
         await tx.wait();
-        
+
         showTxStatus('Success! Token listed');
         priceInput.value = '';
         await loadTokens();
-        
+
         setTimeout(hideTxStatus, 3000);
     } catch (error) {
-        console.error('Failed to list token:', error);
+        // console.error('Failed to list token:', error);
         showTxStatus('Failed to list token');
         setTimeout(hideTxStatus, 3000);
     }
@@ -258,17 +284,17 @@ async function transferToken(tokenId) {
     try {
         showTxStatus('Preparing transfer...');
         const tx = await contract.transfer(tokenId, address);
-        
+
         showTxStatus('Processing transaction...');
         await tx.wait();
-        
+
         showTxStatus('Success! Token transferred');
         transferInput.value = '';
         await loadTokens();
-        
+
         setTimeout(hideTxStatus, 3000);
     } catch (error) {
-        console.error('Failed to transfer token:', error);
+        // console.error('Failed to transfer token:', error);
         const reason = parseError(error);
         showTxStatus(reason || 'Transfer failed');
         setTimeout(hideTxStatus, 3000);
@@ -294,16 +320,16 @@ async function buyToken(tokenId) {
 
         showTxStatus('Waiting for confirmation...');
         const tx = await contract.buyToken(tokenId, { value: price });
-        
+
         showTxStatus('Processing transaction...');
         await tx.wait();
-        
+
         showTxStatus('Success! NFT purchased');
         await loadTokens();
-        
+
         setTimeout(hideTxStatus, 3000);
     } catch (error) {
-        console.error('Failed to buy token:', error);
+        // console.error('Failed to buy token:', error);
         const reason = parseError(error);
         showTxStatus(reason || 'Transaction failed');
         setTimeout(hideTxStatus, 3000);
