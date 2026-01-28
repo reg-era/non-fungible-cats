@@ -4,10 +4,7 @@ pragma solidity ^0.8.20;
 contract BasicNFT {
     string public name;
 
-    // tokenId => owner
     mapping(uint256 => address) internal _owners;
-
-    // tokenId => metadata URI
     mapping(uint256 => string) internal _tokenURIs;
 
     event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);

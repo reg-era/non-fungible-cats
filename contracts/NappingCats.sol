@@ -5,35 +5,26 @@ import "./BasicNFT.sol";
 
 contract NappingCats is BasicNFT {
     uint256 public initialPrice;
-    uint256 public nextTokenId;
-
-    // tokenId => sale price (0 means not listed)
     mapping(uint256 => uint256) public listedPrice;
 
     event TokenListed(uint256 indexed tokenId, uint256 price);
     event TokenPurchased(uint256 indexed tokenId, address buyer, uint256 price);
 
-    constructor(uint256 _initialPrice)
-        BasicNFT("Napping Cats")
-    {
+    constructor(uint256 _initialPrice) BasicNFT("Napping Cats") {
         initialPrice = _initialPrice;
 
         // Mint first 3 cats without owners
-        _createCat("0.json");
-        _createCat("1.json");
-        _createCat("2.json");
+        _tokenURIs[0] = "0.json";
+        _owners[0] = address(0);
+
+        _tokenURIs[1] = "1.json";
+        _owners[1] = address(0);
+
+        _tokenURIs[2] = "2.json";
+        _owners[2] = address(0);
     }
 
-    function _createCat(string memory uri) internal {
-        _tokenURIs[nextTokenId] = uri;
-        _owners[nextTokenId] = address(0);
-        nextTokenId++;
-    }
-
-    // --------------------
     // Trading
-    // --------------------
-
     function listToken(uint256 tokenId, uint256 price) external {
         require(_owners[tokenId] == msg.sender, "Not owner");
         require(price > 0, "Price must be positive");
@@ -59,7 +50,8 @@ contract NappingCats is BasicNFT {
 
         // Pay previous owner if exists
         if (owner != address(0)) {
-            payable(owner).transfer(price);
+            (bool success, ) = payable(owner).call{value: price}("");
+            require(success, "ETH transfer failed");
             listedPrice[tokenId] = 0;
         }
 

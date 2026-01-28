@@ -20,7 +20,7 @@
   },
   "scripts": {
     "run-node":"npx hardhat node",
-    "deploy":"npx hardhat run --script scripts/deploy.js --network localhost",
-    "serve": "cd interface && npm run start"
+    "deploy":"npx hardhat run scripts/deploy.js --network localhost && mv scripts/napping_cats_contract.json frontend/src",
+    "serve": "cd frontend && npm run dev"
   }
 }
